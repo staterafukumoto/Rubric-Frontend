@@ -7,6 +7,7 @@ import sqlite3
 #user.html need to make students a list instead of one var, currently it's only printing the first name. - Done!
 #Add some git you lazy fatass.
 #Add request if statement to student function. 
+#Testing my GIT
 
 #Initializes SQL Database
 conn = sqlite3.connect("twoDadDatabase.db")
