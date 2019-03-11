@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+<title>Test</title>
+</head>
+
+<body>
+<p>Please Enter Student Name:</p>
+</body>
+
+{% for i in range(num) %}
+<form action = "http://localhost:5000/students" method = "POST">
+    <input type="text", name="name[]">
+    {% endfor %}
+    <input type="submit">
+</form>
