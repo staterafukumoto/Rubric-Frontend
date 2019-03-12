@@ -59,7 +59,7 @@ def user():
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
 
-        cur.execute("SELECT name FROM students WHERE name=student")
+        cur.execute("SELECT name FROM students WHERE name=''")
         dataTest = cur.fetchall()
 
 
