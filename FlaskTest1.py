@@ -54,16 +54,16 @@ def students():
 @app.route('/user', methods = ['POST'])
 def user():
 
-    student = request.form["StudentDB"]
+    studentSQL = request.form["StudentDB"]
 
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
 
-        cur.execute("SELECT name FROM students WHERE name=''")
+        cur.execute("SELECT name FROM students WHERE name =? ", (studentSQL,))
         dataTest = cur.fetchall()
 
 
-    return render_template("user.html", student=student, test=dataTest)
+    return render_template("user.html", student=studentSQL, test=dataTest)
 
 
 
