@@ -7,14 +7,16 @@
 <body>
 
 <label>Welcome to the Autograding Rubric</label>
-<p>Please enter the number of students.</p>
+<p> </p>
+<a href="{{ url_for('students') }}">Go directly to student your student list</a>
+
+<p>Please enter the number of students you would like to add.</p>
 
 <form action="{{ url_for('results') }}" method="POST">
-    <input type="number" name="num" id="studentNum">
+    <input type="number" name="num">
     <input type="submit">
 </form>
 
-<a href="{{ url_for('students') }}">Go directly to student list</a>
 
 </body>
 

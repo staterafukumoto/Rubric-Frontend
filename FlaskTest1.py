@@ -8,6 +8,7 @@ import sqlite3
 #Add try/Catch statement to student name enter.
 #Can't get past Students
 #Pass student var from Database into next site page. (Hard?)
+#Does not take names with a space :/
 
 #Initializes SQL Database
 conn = sqlite3.connect("twoDadDatabase.db")
@@ -52,7 +53,17 @@ def students():
 
 @app.route('/user', methods = ['POST'])
 def user():
-    return render_template("user.html")
+
+    student = request.form["StudentDB"]
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
+
+        cur.execute("SELECT name FROM students WHERE name=student")
+        dataTest = cur.fetchall()
+
+
+    return render_template("user.html", student=student, test=dataTest)
 
 
 
