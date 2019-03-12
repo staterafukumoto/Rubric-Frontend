@@ -2,10 +2,13 @@
 
 <h2>Please Select Your Student.</h2>
 
-{% for i in range(studentNum) %}
+{% for x in students %}
 <form action = "http://localhost:5000/students" method = "POST">
-    {{ students[i] }}<br />
+<tr>
+    {{ x[0] }}<br />
     <input type="submit">
     <p> </p><br />
+</tr>
     {% endfor %}
+
 </form>

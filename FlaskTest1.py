@@ -3,11 +3,11 @@ import os.path
 import sqlite3
 
 #TODO...
-#test.html, need to find a way to allow multiple forms with only ONE submit button. - Done! (Thank god)
-#user.html need to make students a list instead of one var, currently it's only printing the first name. - Done!
-#Add some git you lazy fatass.
+#Add some git you lazy fatass. - Done :/
 #Add request if statement to student function. 
-#Testing my GIT
+#Add try/Catch statement to student name enter.
+#Can't get past Students
+#Pass student var from Database into next site page. (Hard?)
 
 #Initializes SQL Database
 conn = sqlite3.connect("twoDadDatabase.db")
@@ -41,8 +41,12 @@ def students():
 
         con.commit()
         print("Value Recorded")
+    
+    cur.execute("SELECT name from students LIMIT 20")
+    studentsDB = cur.fetchall()
 
-    return render_template("students.html", studentNum = len(students), students = students)
+
+    return render_template("students.html", students = studentsDB)
 
 
 
