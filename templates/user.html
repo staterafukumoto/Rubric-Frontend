@@ -1,4 +1,11 @@
 <!DOCTYPE html>
 
-<h2>{{ student }}</h2>
-<p>{{ test }}</p>
+
+<h2>Student Name: {{ student }}</h2>
+
+<h1><center>Preparedness</center></h1>
+
+<form action="{{ url_for('userRoute') }}" method = "POST">
+    <input type="submit" name="minusOne" value="-1" style="float: left;"> 
+    <input type="submit" name="plusOne" value="+1" style="float: right;">
+</form>

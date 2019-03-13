@@ -10,7 +10,10 @@ import sqlite3
 #Pass student var from Database into next site page. (Hard?)
 #Does not take names with a space :/
 
-#Initializes SQL Database
+#Look into Node.JS to acsess the SQLite database, we don't NEED to edit the SQL in Python.
+#Consider switching to MYSQL
+
+#Initializes SQL Dsatabase
 conn = sqlite3.connect("twoDadDatabase.db")
 print("Opened database sucsessfully")
 conn.close()
@@ -53,19 +56,34 @@ def students():
 
 @app.route('/user', methods = ['POST'])
 def user():
-
     studentSQL = request.form["StudentDB"]
+
+
+    return render_template("user.html", student=studentSQL)
+
+
+@app.route('/userRoute', methods = ['POST'])
+def userRoute():
+
+    studentSQL2 = request.form["value"]
 
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
 
-        cur.execute("SELECT name FROM students WHERE name =? ", (studentSQL,))
+        cur.execute("SELECT * FROM students WHERE name =? ", (studentSQL2,))
         dataTest = cur.fetchall()
+    
+        if request.form.get("minusOne", False):
+            cur.execute("UPDATE students SET Preparedness = Preparedness - 1 WHERE name =? ", (studentSQL2,))
+            print("-1 on Preparedness for " + studentSQL2)
+        if request.form.get("plusOne", False):
+            print("Maybe Flask ins't that bad...")
 
 
-    return render_template("user.html", student=studentSQL, test=dataTest)
+
+    return render_template("test.html", student=studentSQL2, data=dataTest)
 
 
 
 if __name__ == "__main__":
-    app.run(debug=True) #We need Debug on because we are developing it, console will display more information.%A
+    app.run(debug=True)
