@@ -6,6 +6,7 @@
 <h1><center>Preparedness</center></h1>
 
 <form action="{{ url_for('userRoute') }}" method = "POST">
-    <input type="submit" name="minusOne" value="-1" style="float: left;"> 
-    <input type="submit" name="plusOne" value="+1" style="float: right;">
+    <input type="radio" name="minusOne" value="-1" style="float: left;"> 
+    <input type="radio" name="plusOne" value="+1" style="float: right;"><br>
+    <input type="submit" name="submit" value="{{ student }}">
 </form>
