@@ -3,13 +3,14 @@ import os.path
 import sqlite3
 
 #TODO...
-#Add some git you lazy fatass. - Done :/
 #Add request if statement to student function. 
 #Add try/Catch statement to student name enter.
-#Can't get past Students
-#Pass student var from Database into next site page. (Hard?)
+#Can't get past Students - Fixed!
+#Pass student var from Database into next site page. (Hard?) - Fixed! (It was)
+#Remove Student
+#Score student - Done!
+#Add CSS and clean up code
 #Does not take names with a space :/
-
 #Consider switching to MYSQL
 
 #Initializes SQL Dsatabase
@@ -45,7 +46,7 @@ def students():
             cur.execute("INSERT INTO students(name) VALUES (? )", (students[i],))
 
         con.commit()
-        print("Value Recorded")
+        print("Value Inserted")
     cur.execute("SELECT name from students LIMIT 20")
     studentsDB = cur.fetchall()
     
@@ -59,14 +60,14 @@ def user():
 
     studentSQL = request.form['StudentDB']
 
-     with sqlite3.connect("twoDadDatabase.db") as con:
+    with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
 
         cur.execute("SELECT * FROM students WHERE name =? ", (studentSQL,))
         dataTest = cur.fetchall()
 
 
-    return render_template("user.html", student=studentSQL)
+    return render_template("user.html", student=studentSQL, data=dataTest)
 
 
 
@@ -77,16 +78,69 @@ def userRoute():
 
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
+        
+        def addValue():
 
-    
-        if request.form.get("minusOne", False):
-            cur.execute("UPDATE students SET Preparedness = Preparedness - 1 WHERE name =? ", (studentSQL,))
-            print("-1 on Preparedness for " + studentSQL)
-        if request.form.get("plusOne", False):
-            cur.execute("UPDATE students SET Preparedness = Preparedness + 1 WHERE name =? ", (studentSQL,))
-            print("+1 on Preparedness for " + studentSQL)
+            #Preparedness
+            if request.form.get("minusOne1", False):
+                cur.execute("UPDATE students SET Preparedness = Preparedness - 1 WHERE name =? ", (studentSQL,)) 
+                print("-1 on Preparedness for " + studentSQL)
+            elif request.form.get("plusOne1", False):
+                cur.execute("UPDATE students SET Preparedness = Preparedness + 1 WHERE name =? ", (studentSQL,))
+                print("+1 on Preparedness for " + studentSQL)
+            else:
+                print("No value for Preparedness")
 
-    return render_template("test.html", student=studentSQL, data=dataTest)
+            #Engagement
+            if request.form.get("minusOne2", False):
+                cur.execute("UPDATE students SET Engagement = Engagement - 1 WHERE name =? ", (studentSQL,)) 
+                print("-1 on Preparedness for " + studentSQL)
+            elif request.form.get("plusOne2", False):
+                cur.execute("UPDATE students SET Engagement = Engagement + 1 WHERE name =? ", (studentSQL,))
+                print("+1 on Preparedness for " + studentSQL)
+            else:
+                print("No value for Engagement")        
+
+            #Perseverance
+            if request.form.get("minusOne3", False):
+                cur.execute("UPDATE students SET Perseverance = Perseverance - 1 WHERE name =? ", (studentSQL,)) 
+                print("-1 on Preparedness for " + studentSQL)
+            elif request.form.get("plusOne3", False):
+                cur.execute("UPDATE students SET Perseverance = Perseverance + 1 WHERE name =? ", (studentSQL,))
+                print("+1 on Preparedness for " + studentSQL)
+            else:
+                print("No value for Perseverance") 
+
+            #Problem Solving
+            if request.form.get("minusOne4", False):
+                cur.execute("UPDATE students SET ProblemSolving = ProblemSolving - 1 WHERE name =? ", (studentSQL,)) 
+                print("-1 on Preparedness for " + studentSQL)
+            elif request.form.get("plusOne4", False):
+                cur.execute("UPDATE students SET ProblemSolving = ProblemSolving + 1 WHERE name =? ", (studentSQL,))
+                print("+1 on Preparedness for " + studentSQL)
+            else:
+                print("No value for ProblemSolving")        
+
+            #Professionalism
+            if request.form.get("minusOne5", False):
+                cur.execute("UPDATE students SET Professionalism = Professionalism - 1 WHERE name =? ", (studentSQL,)) 
+                print("-1 on Preparedness for " + studentSQL)
+            elif request.form.get("plusOne5", False):
+                cur.execute("UPDATE students SET Professionalism = Professionalism + 1 WHERE name =? ", (studentSQL,))
+                print("+1 on Preparedness for " + studentSQL)
+            else:
+                print("No value for Professionalism")  
+        addValue()
+
+        #Score script
+        cur.execute("SELECT Preparedness, Engagement, Perseverance, ProblemSolving, Professionalism FROM students WHERE name =? ", (studentSQL,))
+        score = cur.fetchall()
+        for x in score:
+            scoreFinal = int(x[0]) + int(x[1]) + int(x[2]) + int(x[3]) + int(x[4])
+            print(str(scoreFinal) + " out of 20 or " + str(scoreFinal * 5) + "%")
+            scorePercent = scoreFinal * 5
+
+    return render_template("userRoute.html", student=studentSQL, score=scoreFinal, scoreP = scorePercent)
 
 
 if __name__ == "__main__":

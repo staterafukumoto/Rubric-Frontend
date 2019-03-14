@@ -2,11 +2,48 @@
 
 
 <h2>Student Name: {{ student }}</h2>
-
-<h1><center>Preparedness</center></h1>
+{% for x in data %}
+    <tr>
+        <td>{{ x[0] }}</td>
+        <td>{{ x[1] }}</td>
+        <td>{{ x[2] }}</td>
+        <td>{{ x[3] }}</td>
+        <td>{{ x[4] }}</td>
+        <td>{{ x[5] }}</td>
+    </tr>
+    {% endfor %}
 
 <form action="{{ url_for('userRoute') }}" method = "POST">
-    <input type="radio" name="minusOne" value="-1" style="float: left;"> 
-    <input type="radio" name="plusOne" value="+1" style="float: right;"><br>
-    <input type="submit" name="submit" value="{{ student }}">
+    <h2><center>Preparedness</center></h2>
+    <p style="float: left;">-1</p><br>
+    <input type="radio" name="minusOne1" value="-1" style="float: left;">
+    <p style="float: right;">+1</p>  <br>
+    <input type="radio" name="plusOne1" value="+1" style="float: right;"><br>
+
+    <h2><center>Engagement</center></h2>
+    <p style="float: left;">-1</p><br>
+    <input type="radio" name="minusOne2" value="-1" style="float: left;">
+    <p style="float: right;">+1</p>  <br>
+    <input type="radio" name="plusOne2" value="+1" style="float: right;"><br>
+
+    <h2><center>Perseverance</center></h2>
+    <p style="float: left;">-1</p><br>
+    <input type="radio" name="minusOne3" value="-1" style="float: left;">
+    <p style="float: right;">+1</p>  <br>
+    <input type="radio" name="plusOne3" value="+1" style="float: right;"><br>
+
+    <h2><center>Problem Solving</center></h2>
+    <p style="float: left;">-1</p><br>
+    <input type="radio" name="minusOne4" value="-1" style="float: left;">
+    <p style="float: right;">+1</p>  <br>
+    <input type="radio" name="plusOne4" value="+1" style="float: right;"><br>
+
+    <h2><center>Professionalism</center></h2>
+    <p style="float: left;">-1</p><br>
+    <input type="radio" name="minusOne5" value="-1" style="float: left;">
+    <p style="float: right;">+1</p>  <br>
+    <input type="radio" name="plusOne5" value="+1" style="float: right;"><br>
+
+    <center><h3>"Submit"</h3></center>
+    <center><input type="submit" name="submit" value="{{ student }}"></center>
 </form>
