@@ -2,7 +2,8 @@
 
 <h2>Please Select Your Student.</h2>
 
-<a href="{{ url_for('index') }}">Add more students</a>
+<a href="{{ url_for('add') }}">Add more students</a><br>
+<a href="{{ url_for('remove') }}">Remove students</a>
 <p> </p>
 
 {% for row in students %}

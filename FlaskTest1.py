@@ -1,17 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for
-import os.path
 import sqlite3
 
 #TODO...
 #Add request if statement to student function. 
 #Add try/Catch statement to student name enter.
-#Can't get past Students - Fixed!
-#Pass student var from Database into next site page. (Hard?) - Fixed! (It was)
-#Remove Student
-#Score student - Done!
+#Remove Student function
 #Add CSS and clean up code
-#Does not take names with a space :/
+#Make /user not look... gross.
+#Score button? - Half done
+#Does not take names with a space - try/catch
 #Consider switching to MYSQL
+#Switch /students to the Index page
+#User handling
+#More than one classes
+#Automatic redirect on UserRoute?
+#Reset student score button - Push
+#Can't have more than 4 or less than 0
+
 
 #Initializes SQL Dsatabase
 conn = sqlite3.connect("twoDadDatabase.db")
@@ -20,23 +25,10 @@ conn.close()
 
 app = Flask(__name__)       
 
-global studentSQL
 
-@app.route('/')
-def index():
-    return render_template("index.html")
-
-
-@app.route('/result', methods = ['POST'])
-def results():
-    numberOfStudents = int(request.form["num"])
-
-    return render_template("results.html", num=numberOfStudents)
-
-
-
-@app.route('/students', methods = ['POST', 'GET'] )
+@app.route('/', methods = ['POST', 'GET'])
 def students():
+
     students = request.form.getlist('name[]')
 
     with sqlite3.connect("twoDadDatabase.db") as con:
@@ -47,11 +39,42 @@ def students():
 
         con.commit()
         print("Value Inserted")
+
     cur.execute("SELECT name from students LIMIT 20")
     studentsDB = cur.fetchall()
-    
 
+    
     return render_template("students.html", students = studentsDB)
+
+@app.route('/remove', methods = ['POST', 'GET'])
+def remove():
+    pass    
+
+    return render_template('remove.html')
+
+@app.route('/removeResult', methods = ['POST'])
+def removeResult():
+    name = request.form['name']
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()    
+
+        cur.execute("DELETE FROM students WHERE name =?", (name,))
+        con.commit()
+
+    return render_template('removeResult.html')
+
+@app.route('/result', methods = ['POST'])
+def results():
+    numberOfStudents = int(request.form["num"])
+
+    return render_template("results.html", num=numberOfStudents)
+
+
+
+@app.route('/students', methods = ['POST', 'GET'] )
+def add():
+    return render_template("index.html")
 
 
 
@@ -135,6 +158,7 @@ def userRoute():
         #Score script
         cur.execute("SELECT Preparedness, Engagement, Perseverance, ProblemSolving, Professionalism FROM students WHERE name =? ", (studentSQL,))
         score = cur.fetchall()
+        # More than 4
         for x in score:
             scoreFinal = int(x[0]) + int(x[1]) + int(x[2]) + int(x[3]) + int(x[4])
             print(str(scoreFinal) + " out of 20 or " + str(scoreFinal * 5) + "%")
