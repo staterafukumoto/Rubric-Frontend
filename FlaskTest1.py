@@ -2,20 +2,28 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 #TODO...
-#Add request if statement to student function. 
-#Add try/Catch statement to student name enter.
-#Remove Student function
-#Add CSS and clean up code
-#Make /user not look... gross.
-#Score button? - Half done
-#Does not take names with a space - try/catch
+#Add request if statement to student function. -Done! (in a way)
+#Make /user not look... gross. -WIP
+#Score button? - Will make the value hide, but not show...
+#I hate the score list on /user
+
+
+#Ask sid to scetch out how he wants his frontend to look
+#Add CSS and clean up code  - Ongoing 
+#Switch /students to the Index page -Done
+#More than one classes 
+#Automatic redirect on UserRoute
+#Can't have more than 4 or less than 0 
+#User handling 
 #Consider switching to MYSQL
-#Switch /students to the Index page
-#User handling
-#More than one classes
-#Automatic redirect on UserRoute?
+#Not required to select a catagory   
+#Can select all buttons, cannot de-select - Fixed
+#Does not take names with a space - try/catch -Push
+#Add try/Catch statement to student name enter. - Push
 #Reset student score button - Push
-#Can't have more than 4 or less than 0
+
+#Use functions to declare vars, so you only declare the var when you actaully need it
+#Example, def test1(): request.getform['testvar']    if x == y: test1()
 
 
 #Initializes SQL Dsatabase
@@ -26,9 +34,9 @@ conn.close()
 app = Flask(__name__)       
 
 
+
 @app.route('/', methods = ['POST', 'GET'])
 def students():
-
     students = request.form.getlist('name[]')
 
     with sqlite3.connect("twoDadDatabase.db") as con:
@@ -46,11 +54,14 @@ def students():
     
     return render_template("students.html", students = studentsDB)
 
-@app.route('/remove', methods = ['POST', 'GET'])
+
+
+@app.route('/remove', methods = ['GET'])
 def remove():
-    pass    
 
     return render_template('remove.html')
+
+
 
 @app.route('/removeResult', methods = ['POST'])
 def removeResult():
@@ -64,6 +75,8 @@ def removeResult():
 
     return render_template('removeResult.html')
 
+
+
 @app.route('/result', methods = ['POST'])
 def results():
     numberOfStudents = int(request.form["num"])
@@ -72,7 +85,7 @@ def results():
 
 
 
-@app.route('/students', methods = ['POST', 'GET'] )
+@app.route('/students', methods = ['GET'] )
 def add():
     return render_template("index.html")
 
@@ -105,54 +118,61 @@ def userRoute():
         def addValue():
 
             #Preparedness
-            if request.form.get("minusOne1", False):
+            button1 = request.form["button1"]
+            button2 = request.form["button2"]
+            button3 = request.form["button3"]
+            button4 = request.form["button4"]
+            button5 = request.form["button5"] 
+
+            if button1 == "-1":
                 cur.execute("UPDATE students SET Preparedness = Preparedness - 1 WHERE name =? ", (studentSQL,)) 
                 print("-1 on Preparedness for " + studentSQL)
-            elif request.form.get("plusOne1", False):
+            elif button1 == "+1":
                 cur.execute("UPDATE students SET Preparedness = Preparedness + 1 WHERE name =? ", (studentSQL,))
                 print("+1 on Preparedness for " + studentSQL)
             else:
                 print("No value for Preparedness")
 
             #Engagement
-            if request.form.get("minusOne2", False):
+            if button2 == "-1":
                 cur.execute("UPDATE students SET Engagement = Engagement - 1 WHERE name =? ", (studentSQL,)) 
                 print("-1 on Preparedness for " + studentSQL)
-            elif request.form.get("plusOne2", False):
+            elif button2 == "+1":
                 cur.execute("UPDATE students SET Engagement = Engagement + 1 WHERE name =? ", (studentSQL,))
                 print("+1 on Preparedness for " + studentSQL)
             else:
                 print("No value for Engagement")        
 
             #Perseverance
-            if request.form.get("minusOne3", False):
+            if button3 == "-1":
                 cur.execute("UPDATE students SET Perseverance = Perseverance - 1 WHERE name =? ", (studentSQL,)) 
                 print("-1 on Preparedness for " + studentSQL)
-            elif request.form.get("plusOne3", False):
+            elif button3 == "+1":
                 cur.execute("UPDATE students SET Perseverance = Perseverance + 1 WHERE name =? ", (studentSQL,))
                 print("+1 on Preparedness for " + studentSQL)
             else:
                 print("No value for Perseverance") 
 
             #Problem Solving
-            if request.form.get("minusOne4", False):
+            if button4 == "-1":
                 cur.execute("UPDATE students SET ProblemSolving = ProblemSolving - 1 WHERE name =? ", (studentSQL,)) 
                 print("-1 on Preparedness for " + studentSQL)
-            elif request.form.get("plusOne4", False):
+            elif button4 == "+1":
                 cur.execute("UPDATE students SET ProblemSolving = ProblemSolving + 1 WHERE name =? ", (studentSQL,))
                 print("+1 on Preparedness for " + studentSQL)
             else:
                 print("No value for ProblemSolving")        
 
             #Professionalism
-            if request.form.get("minusOne5", False):
+            if button5 == "-1":
                 cur.execute("UPDATE students SET Professionalism = Professionalism - 1 WHERE name =? ", (studentSQL,)) 
                 print("-1 on Preparedness for " + studentSQL)
-            elif request.form.get("plusOne5", False):
+            elif button5 == "+1":
                 cur.execute("UPDATE students SET Professionalism = Professionalism + 1 WHERE name =? ", (studentSQL,))
                 print("+1 on Preparedness for " + studentSQL)
             else:
                 print("No value for Professionalism")  
+
         addValue()
 
         #Score script

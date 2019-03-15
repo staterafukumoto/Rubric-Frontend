@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 
+<head>
+    <title>{{ student }} Grade</title>
+</head>
 
-<h2>Student Name: {{ student }}</h2>
+<body>
 {% for x in data %}
-    <tr>
-        <td>{{ x[0] }}</td>
-        <td>{{ x[1] }}</td>
-        <td>{{ x[2] }}</td>
-        <td>{{ x[3] }}</td>
-        <td>{{ x[4] }}</td>
-        <td>{{ x[5] }}</td>
-    </tr>
-    {% endfor %}
+        <h3>Name: {{ x[0] }}</h3>
+            <center><h2>Preparedness: {{ x[1] }} Engagement: {{ x[2] }} Perseverance: {{ x[3] }} Problem Solving: {{ x[4] }} Professionalism: {{ x[5] }}</h2></center>
+    {% endfor %}<br>
+
+
+<a href="{{ url_for('students') }}">Back to students page.</a>
 
 <form action="{{ url_for('userRoute') }}" method = "POST">
     <h2><center>Preparedness</center></h2>
     <p style="float: left;">-1</p><br>
-    <input type="radio" name="minusOne1" value="-1" style="float: left;">
+    <input type="radio" name="button1" value="-1" style="float: left;" required>
     <p style="float: right;">+1</p>  <br>
-    <input type="radio" name="plusOne1" value="+1" style="float: right;"><br>
+    <input type="radio" name="button1" value="+1" style="float: right;" required><br>
 
     <h2><center>Engagement</center></h2>
     <p style="float: left;">-1</p><br>
-    <input type="radio" name="minusOne2" value="-1" style="float: left;">
+    <input type="radio" name="button2" value="-1" style="float: left;" required>
     <p style="float: right;">+1</p>  <br>
-    <input type="radio" name="plusOne2" value="+1" style="float: right;"><br>
+    <input type="radio" name="button2" value="+1" style="float: right;" required><br>
 
     <h2><center>Perseverance</center></h2>
     <p style="float: left;">-1</p><br>
-    <input type="radio" name="minusOne3" value="-1" style="float: left;">
+    <input type="radio" name="button3" value="-1" style="float: left;" required>
     <p style="float: right;">+1</p>  <br>
-    <input type="radio" name="plusOne3" value="+1" style="float: right;"><br>
+    <input type="radio" name="button3" value="+1" style="float: right;" required><br>
 
     <h2><center>Problem Solving</center></h2>
     <p style="float: left;">-1</p><br>
-    <input type="radio" name="minusOne4" value="-1" style="float: left;">
+    <input type="radio" name="button4" value="-1" style="float: left;" required>
     <p style="float: right;">+1</p>  <br>
-    <input type="radio" name="plusOne4" value="+1" style="float: right;"><br>
+    <input type="radio" name="button4" value="+1" style="float: right;" required><br>
 
     <h2><center>Professionalism</center></h2>
     <p style="float: left;">-1</p><br>
-    <input type="radio" name="minusOne5" value="-1" style="float: left;">
+    <input type="radio" name="button5" value="-1" style="float: left;" required>
     <p style="float: right;">+1</p>  <br>
-    <input type="radio" name="plusOne5" value="+1" style="float: right;"><br>
+    <input type="radio" name="button5" value="+1" style="float: right;" required><br>
 
     <center><h3>"Submit"</h3></center>
     <center><input type="submit" name="submit" value="{{ student }}"></center>
 </form>
+</body>
+
+<style type="text/css">
+    <!--
+    .tab { margin-left: 40px; }
+    -->
+    </style>

@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 
+<head>
+<title>Test</title>
+</head>
+
+<body>
 <h2>Please Select Your Student.</h2>
 
 <a href="{{ url_for('add') }}">Add more students</a><br>
-<a href="{{ url_for('remove') }}">Remove students</a>
 <p> </p>
+<a href="{{ url_for('remove') }}">Remove students</a><br>
+<h1> </h1>
 
 {% for row in students %}
 <form action="{{ url_for('user') }}" method = "POST">
@@ -13,3 +19,4 @@
     {% endfor %}
 
 </form>
+</body>

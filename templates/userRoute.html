@@ -5,12 +5,24 @@
 
 <body>
 <p>Value Entered for {{ student }}</p>
+<a href="{{ url_for('students') }}">Back to students page.</a><br>
 
-<h2>Score for {{ student }} is {{ score }} / 20 or {{ scoreP }}%</h2>
+<p> </p>
 
-<form action="{{ url_for('students') }}" method = "POST">
-</form>
+<button onclick="myFunction()">Score Student</button><br>
 
-<a href="{{ url_for('students') }}">Back to students page.</a>
+<div id="DIV1" visibility: visible>
+    <h2>Score for {{ student }} is {{ score }} / 20 or {{ scoreP }}%</h2>
+
+    <form action="{{ url_for('students') }}" method = "POST">
+    </form>
+
+</div>
 </body>
+
+<script>
+function myFunction() {
+  document.getElementById("DIV1").style.visibility = "hidden";
+ }
+</script>
 
