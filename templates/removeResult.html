@@ -1,4 +1,15 @@
 <!doctype html>
+<html>
 
-<p>Value Recorded</p>
-<a href="{{ url_for('students') }}">Back to main page</a><br>
+<head>
+    <title>{{student}} Removed</title>
+</head>
+
+<body>
+<p>{{student}} Removed</p>
+<form action="{{ url_for('students') }}">
+    <input type="submit" value="Main Page" />
+</form><br>
+</body>
+
+</html>

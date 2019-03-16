@@ -1,17 +1,21 @@
 <!DOCTYPE html>
+<html>
+
 <head>
-<title>Test</title>
+<title>{{student}} Result</title>
 </head>
 
 <body>
 <p>Value Entered for {{ student }}</p>
-<a href="{{ url_for('students') }}">Back to students page.</a><br>
+<form action="{{ url_for('students') }}">
+  <input type="submit" value="Main Page" />
+</form><br>
 
 <p> </p>
 
-<button onclick="myFunction()">Score Student</button><br>
+<button onclick="showButton()">Score Student</button><br>
 
-<div id="DIV1" visibility: visible>
+<div id="DIV1" class="hidden">
     <h2>Score for {{ student }} is {{ score }} / 20 or {{ scoreP }}%</h2>
 
     <form action="{{ url_for('students') }}" method = "POST">
@@ -19,10 +23,18 @@
 
 </div>
 </body>
+</html>
+
+
+<style>
+  div.hidden {
+    display: none;
+  }
+</style>
+
 
 <script>
-function myFunction() {
-  document.getElementById("DIV1").style.visibility = "hidden";
- }
+function showButton(){
+  document.getElementById("DIV1").style.display='block';
+}
 </script>
-

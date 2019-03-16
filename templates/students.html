@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 
 <head>
-<title>Test</title>
+<link rel="stylesheet" type="text/css" href="static/css/style.css">
+<title>Rubric</title>
 </head>
 
 <body>
 <h2>Please Select Your Student.</h2>
 
-<a href="{{ url_for('add') }}">Add more students</a><br>
-<p> </p>
-<a href="{{ url_for('remove') }}">Remove students</a><br>
-<h1> </h1>
+<form action="{{ url_for('add') }}">
+    <input type="submit" value="Add more students" />
+</form><br>
+
+<form action="{{ url_for('remove') }}">
+    <input type="submit" value="Remove students" />
+</form><br>
+
+<br><br>
 
 {% for row in students %}
 <form action="{{ url_for('user') }}" method = "POST">

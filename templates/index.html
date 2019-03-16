@@ -1,21 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
+<html>
 
 <head>
-<title>Rubric</title>
+<link rel="stylesheet" type="text/css" href="static/css/style.css">
+<title>Select Student</title>
 </head>
 
 <body>
-<a href="{{ url_for('students') }}">Back to main page</a><br>
+<h2>Please Select Your Student.</h2>
 
-<p> </p>
+<form action="{{ url_for('add') }}">
+    <input type="submit" value="Add more students" />
+</form><br>
 
-<p>Please enter the number of students you would like to add.</p>
+<form action="{{ url_for('remove') }}">
+    <input type="submit" value="Remove students" />
+</form><br>
 
-<form action="{{ url_for('results') }}" method="POST">
-    <input type="number" name="num" required>
-    <input type="submit">
+<br><br>
+
+{% for row in students %}
+<form action="{{ url_for('user') }}" method = "POST">
+    <input type="submit", name="StudentDB" value={{ row[0] }}>
+    <p> </p><br />
+    {% endfor %}
+
 </form>
 </body>
-
 
 </html>
