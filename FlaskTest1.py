@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
+<<<<<<< HEAD
 #TODO today
 #Students GET/POST (For my sake) - Done!
 #Give pages proper names - Done!
@@ -24,6 +25,29 @@ import sqlite3
 '''Use functions to declare vars, so you only declare the var when you actaully need it
 Example, def test1(): request.getform['testvar']    if x == y: test1()''' 
 # ^ This actually works!
+=======
+#TODO...
+#Make /user not look... gross. - Sid 
+#Score button? - Done!
+#I hate the score list on /user - Sid
+#Can't have more than 4 or less than 0 - Done
+#Not required to select a catagory - DONE!
+
+
+#Ask sid to scetch out how he wants his frontend to look
+#Add CSS and clean up code  - Ongoing 
+#CSS redirect buttons
+#More than one class
+#Automatic redirect on UserRoute 
+#User handling 
+#Consider switching to MYSQL 
+#Does not take names with a space - try/catch -Push 
+#Add try/Catch statement to student name enter. - Push 
+#Reset student score button - Push 
+
+#Use functions to declare vars, so you only declare the var when you actaully need it
+#Example, def test1(): request.getform['testvar']    if x == y: test1()
+>>>>>>> 61dc77c3edb37d63ee97aa12218dc50f6f188f6f
 
 
 #Initializes SQL Dsatabase
