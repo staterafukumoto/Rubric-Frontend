@@ -2,25 +2,23 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 #TODO...
-#Add request if statement to student function. -Done! (in a way)
-#Make /user not look... gross. -WIP
-#Score button? - Will make the value hide, but not show...
-#I hate the score list on /user
+#Make /user not look... gross. - Sid 
+#Score button? - Done!
+#I hate the score list on /user - Sid
+#Can't have more than 4 or less than 0 - Done
+#Not required to select a catagory - DONE!
 
 
 #Ask sid to scetch out how he wants his frontend to look
 #Add CSS and clean up code  - Ongoing 
-#Switch /students to the Index page -Done
-#More than one classes 
-#Automatic redirect on UserRoute
-#Can't have more than 4 or less than 0 
+#CSS redirect buttons
+#More than one class
+#Automatic redirect on UserRoute 
 #User handling 
-#Consider switching to MYSQL
-#Not required to select a catagory   
-#Can select all buttons, cannot de-select - Fixed
-#Does not take names with a space - try/catch -Push
-#Add try/Catch statement to student name enter. - Push
-#Reset student score button - Push
+#Consider switching to MYSQL 
+#Does not take names with a space - try/catch -Push 
+#Add try/Catch statement to student name enter. - Push 
+#Reset student score button - Push 
 
 #Use functions to declare vars, so you only declare the var when you actaully need it
 #Example, def test1(): request.getform['testvar']    if x == y: test1()
@@ -32,7 +30,6 @@ print("Opened database sucsessfully")
 conn.close()
 
 app = Flask(__name__)       
-
 
 
 @app.route('/', methods = ['POST', 'GET'])
@@ -118,60 +115,68 @@ def userRoute():
         def addValue():
 
             #Preparedness
-            button1 = request.form["button1"]
-            button2 = request.form["button2"]
-            button3 = request.form["button3"]
-            button4 = request.form["button4"]
-            button5 = request.form["button5"] 
-
-            if button1 == "-1":
-                cur.execute("UPDATE students SET Preparedness = Preparedness - 1 WHERE name =? ", (studentSQL,)) 
-                print("-1 on Preparedness for " + studentSQL)
-            elif button1 == "+1":
-                cur.execute("UPDATE students SET Preparedness = Preparedness + 1 WHERE name =? ", (studentSQL,))
-                print("+1 on Preparedness for " + studentSQL)
+            if request.form.get("button1", False):
+                button1 = request.form["button1"]
+                if button1 == "-1":
+                    cur.execute("UPDATE students SET Preparedness = Preparedness - 1 WHERE name =? ", (studentSQL,)) 
+                    print("-1 on Preparedness for " + studentSQL)
+                elif button1 == "+1":
+                    cur.execute("UPDATE students SET Preparedness = Preparedness + 1 WHERE name =? ", (studentSQL,))
+                    print("+1 on Preparedness for " + studentSQL)
             else:
                 print("No value for Preparedness")
 
             #Engagement
-            if button2 == "-1":
-                cur.execute("UPDATE students SET Engagement = Engagement - 1 WHERE name =? ", (studentSQL,)) 
-                print("-1 on Preparedness for " + studentSQL)
-            elif button2 == "+1":
-                cur.execute("UPDATE students SET Engagement = Engagement + 1 WHERE name =? ", (studentSQL,))
-                print("+1 on Preparedness for " + studentSQL)
+            if request.form.get("button2", False):
+                button2 = request.form["button2"]
+                if button2 == "-1":
+                    cur.execute("UPDATE students SET Engagement = Engagement - 1 WHERE name =? ", (studentSQL,)) 
+                    print("-1 on Engagement for " + studentSQL)
+                elif button2 == "+1":
+                    cur.execute("UPDATE students SET Engagement = Engagement + 1 WHERE name =? ", (studentSQL,))
+                    print("+1 on Engagement for " + studentSQL)
             else:
-                print("No value for Engagement")        
+                print("No value for Engagement")
 
             #Perseverance
-            if button3 == "-1":
-                cur.execute("UPDATE students SET Perseverance = Perseverance - 1 WHERE name =? ", (studentSQL,)) 
-                print("-1 on Preparedness for " + studentSQL)
-            elif button3 == "+1":
-                cur.execute("UPDATE students SET Perseverance = Perseverance + 1 WHERE name =? ", (studentSQL,))
-                print("+1 on Preparedness for " + studentSQL)
+            if request.form.get("button3", False):
+                button3 = request.form["button3"]
+                if button3 == "-1":
+                    cur.execute("UPDATE students SET Perseverance = Perseverance - 1 WHERE name =? ", (studentSQL,)) 
+                    print("-1 on Perseverance for " + studentSQL)
+                elif button3 == "+1":
+                    cur.execute("UPDATE students SET Perseverance = Perseverance + 1 WHERE name =? ", (studentSQL,))
+                    print("+1 on Perseverance for " + studentSQL)
             else:
-                print("No value for Perseverance") 
+                print("No value for Perseverance")
 
             #Problem Solving
-            if button4 == "-1":
-                cur.execute("UPDATE students SET ProblemSolving = ProblemSolving - 1 WHERE name =? ", (studentSQL,)) 
-                print("-1 on Preparedness for " + studentSQL)
-            elif button4 == "+1":
-                cur.execute("UPDATE students SET ProblemSolving = ProblemSolving + 1 WHERE name =? ", (studentSQL,))
-                print("+1 on Preparedness for " + studentSQL)
+            if request.form.get("button4", False):
+                button4 = request.form["button4"]
+                if button4 == "-1":
+                    cur.execute("UPDATE students SET ProblemSolving = ProblemSolving - 1 WHERE name =? ", (studentSQL,)) 
+                    print("-1 on Problem Solving for " + studentSQL)
+                elif button4 == "+1":
+                    cur.execute("UPDATE students SET ProblemSolving = ProblemSolving + 1 WHERE name =? ", (studentSQL,))
+                    print("+1 on Problem Solving for " + studentSQL)
+                else:
+                    print("No value for ProblemSolving")  
             else:
-                print("No value for ProblemSolving")        
+                print("No value for Problem Solving")
 
-            #Professionalism
-            if button5 == "-1":
-                cur.execute("UPDATE students SET Professionalism = Professionalism - 1 WHERE name =? ", (studentSQL,)) 
-                print("-1 on Preparedness for " + studentSQL)
-            elif button5 == "+1":
-                cur.execute("UPDATE students SET Professionalism = Professionalism + 1 WHERE name =? ", (studentSQL,))
-                print("+1 on Preparedness for " + studentSQL)
+            #Professionalism 
+            if request.form.get("button5", False):
+                button5 = request.form["button5"]
+                if button5 == "-1":
+                    cur.execute("UPDATE students SET Professionalism = Professionalism - 1 WHERE name =? ", (studentSQL,)) 
+                    print("-1 on Professionalism for " + studentSQL)
+                elif button5 == "+1":
+                    cur.execute("UPDATE students SET Professionalism = Professionalism + 1 WHERE name =? ", (studentSQL,))
+                    print("+1 on Professionalism for " + studentSQL)
+                else:
+                    print("No value for Professionalism") 
             else:
-                print("No value for Professionalism")  
+                print("No value for Professionalism")        
 
         addValue()
 
@@ -180,7 +185,43 @@ def userRoute():
         score = cur.fetchall()
         # More than 4
         for x in score:
-            scoreFinal = int(x[0]) + int(x[1]) + int(x[2]) + int(x[3]) + int(x[4])
+            num1 = x[0]
+            num2 = x[1]
+            num3 = x[2]
+            num4 = x[3]
+            num5 = x[4]
+
+            #Num1
+            if num1 >= 4:
+                num1 = 4
+            elif num1 <= 0:
+                num1 = 0
+
+            #num2
+            if num2 >= 4:
+                num2 = 4
+            elif num2 <= 0:
+                num2 = 0
+            
+            #Num3
+            if num3 >= 4:
+                num3 = 4
+            elif num3 <= 0:
+                num3 = 0
+
+            #num4
+            if num4 >= 4:
+                num4 = 4
+            elif num4 <= 0:
+                num4 = 0
+
+            #num5
+            if num5 >= 4:
+                num5 = 4
+            elif num5 <= 0:
+                num5 = 0
+
+            scoreFinal = num1 + num2 + num3 + num4 + num5
             print(str(scoreFinal) + " out of 20 or " + str(scoreFinal * 5) + "%")
             scorePercent = scoreFinal * 5
 
