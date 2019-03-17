@@ -1,18 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
-<<<<<<< HEAD
 #TODO today
-#Students GET/POST (For my sake) - Done!
-#Give pages proper names - Done!
-#Clean code - Done!
-
+#More than one class - Done!
+#Update SQL function to inclue the new system of sorting- Done!
+#Look into DISTINCT in SQLite3 - Done!
+#Remove number of students add function, I don't like it - Done
+#Add more titles
+#fix the /student post requests - Fixed
+#Create class in webApp 
+#Update Remove Function
 
 #TODO in the future
 #Ask sid to scetch out how he wants his frontend to look - Sid, Beta 0.2
 #Add CSS / margins - Sid, Beta 0.2
 #I hate the score list on /user - Sid, Beta 0.2
-#More than one class - Beta 0.25
 #Reset student score button - Beta 0.25
 #Consider switching to MYSQL - Beta 0.3
 #Consider switching to Django - Beta 0.3
@@ -25,29 +27,7 @@ import sqlite3
 '''Use functions to declare vars, so you only declare the var when you actaully need it
 Example, def test1(): request.getform['testvar']    if x == y: test1()''' 
 # ^ This actually works!
-=======
-#TODO...
-#Make /user not look... gross. - Sid 
-#Score button? - Done!
-#I hate the score list on /user - Sid
-#Can't have more than 4 or less than 0 - Done
-#Not required to select a catagory - DONE!
-
-
-#Ask sid to scetch out how he wants his frontend to look
-#Add CSS and clean up code  - Ongoing 
-#CSS redirect buttons
-#More than one class
-#Automatic redirect on UserRoute 
-#User handling 
-#Consider switching to MYSQL 
-#Does not take names with a space - try/catch -Push 
-#Add try/Catch statement to student name enter. - Push 
-#Reset student score button - Push 
-
-#Use functions to declare vars, so you only declare the var when you actaully need it
-#Example, def test1(): request.getform['testvar']    if x == y: test1()
->>>>>>> 61dc77c3edb37d63ee97aa12218dc50f6f188f6f
+#Reminder, you can use action in your form to do a GET request.
 
 
 #Initializes SQL Dsatabase
@@ -57,42 +37,35 @@ conn.close()
 
 app = Flask(__name__)       
 
-
 @app.route('/', methods = ['POST', 'GET'])
+def classes():
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+            cur = con.cursor()
+
+            cur.execute("SELECT DISTINCT ClassName from students")
+            classSelected = cur.fetchall()    
+
+    return render_template("class.html", Class = classSelected)
+
+
+
+@app.route('/studentList', methods = ['POST'])
 def students():
-    #Load page first time
-    if request.method == 'GET':
+    studentClass = request.form['Class']
+        
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
 
-        with sqlite3.connect("twoDadDatabase.db") as con:
-            cur = con.cursor()
-
-            cur.execute("SELECT name from students LIMIT 20")
-            studentsDB = cur.fetchall()
-
-        return render_template("index.html", students = studentsDB)
-    #Load page student add
-    if request.method == 'POST':
-
-        students = request.form.getlist('name[]')
-
-        with sqlite3.connect("twoDadDatabase.db") as con:
-            cur = con.cursor()
-
-            for i in range(len(students)):
-                cur.execute("INSERT INTO students(name) VALUES (? )", (students[i],))
-
-            con.commit()
-            print("Student(s) added")
-
-            cur.execute("SELECT name from students LIMIT 20")
-            studentsDB = cur.fetchall()
+        cur.execute("SELECT name FROM students WHERE className =?", (studentClass,))
+        studentsDB = cur.fetchall()
 
         
-        return render_template("index.html", students = studentsDB)
+    return render_template("index.html", students = studentsDB, studentClass = studentClass)
 
 
 
-@app.route('/user', methods = ['POST'])
+@app.route('/student', methods = ['POST'])
 def user():
 
     studentSQL = request.form['StudentDB']
@@ -254,17 +227,28 @@ def removeResult():
 
 
 
-@app.route('/add', methods = ['GET'] )
+@app.route('/add', methods = ['GET'])
 def add():
-    return render_template("add.html")
+    with sqlite3.connect("twoDadDatabase.db") as con:
+            cur = con.cursor()
 
+            cur.execute("SELECT DISTINCT ClassName from students")
+            classSelected = cur.fetchall()        
 
+    return render_template("add.html", Class = classSelected)
 
 @app.route('/add/result', methods = ['POST'])
-def results():
-    numberOfStudents = int(request.form["num"])
+def addStudent():
+    Class = request.form['Class']
+    Name = request.form['name']
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
 
-    return render_template("addResults.html", num=numberOfStudents)
+        cur.execute("INSERT INTO students(name, ClassName) VALUES (?, ? )", (Name, Class,))
+        con.commit()
+        print("Student(s) added")
+
+    return render_template("AddResults.html", Class = Class, Name = Name)
 
 
 
