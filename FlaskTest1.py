@@ -2,27 +2,16 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 #TODO today
-#Reset class score button - Done
-#Talk with sid - Done
-#Buttons they are a... - Done
-#Remove class function - Done
-#Check that all routes are URL-FOR - Done
+#Score Student show each column of the Rubric - Done!
 
 #TODO in the future
-#Ask sid to scetch out how he wants his frontend to look - Sid, Beta 0.2
-#Add CSS / margins - Sid, Beta 0.2
-#I hate the score list on /user - Sid, Beta 0.2
-#Remove Function with new SQL method - Beta 0.2
-#Remove function general update - Beta 0.2
-#Score Student show each column of the Rubric - Beta 0.25
 #Consider switching to MYSQL - Beta 0.3
 #Consider switching to Django - Beta 0.3
 #Random select student function - Beta 0.4
 #Submit button for student grade says student name - Beta 0.4
 #User handling - Beta 0.5
-#Does not take names with a space - try/catch -Push 
-#Add try/Catch statement to student name enter. - Push 
-#Check removed - Push
+#Alert on refres, may be fixed after Django. - TBA
+#Does not take names with a space / try/catch - Django
 
 '''Use functions to declare vars, so you only declare the var when you actaully need it
 Example, def test1(): request.getform['testvar']    if x == y: test1()''' 
@@ -201,20 +190,25 @@ def userRoute():
             print(str(scoreFinal) + " out of 20 or " + str(scoreFinal * 5) + "%")
             scorePercent = scoreFinal * 5
 
-    return render_template("userRoute.html", student=studentSQL, score=scoreFinal, scoreP = scorePercent)
+    return render_template("userRoute.html", student=studentSQL, score=scoreFinal, scoreP = scorePercent, num1 = num1, num2 = num2, num3 = num3, num4 = num4, num5 = num5)
 
 
 
 @app.route('/remove', methods = ['GET'])
 def remove():
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
 
-    return render_template('remove.html')
+        cur.execute("SELECT name FROM students")
+        studentsDB = cur.fetchall()
+
+    return render_template('remove.html', student = studentsDB)
 
 
 
 @app.route('/remove/result', methods = ['POST'])
 def removeResult():
-    name = request.form['name']
+    name = request.form['Name']
 
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()    
@@ -321,7 +315,7 @@ def resetResult():
         cur = con.cursor()
 
         cur.execute("UPDATE students SET Preparedness = 3, Engagement = 3, Perseverance = 3, ProblemSolving = 3, Professionalism = 3 WHERE ClassName =? ", (Class,))
-    return render_template('resetRedirect.html')
+    return render_template('resetRedirect.html', Class= Class)
 
 
 

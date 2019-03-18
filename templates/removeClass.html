@@ -6,6 +6,12 @@
 </head>
 
 <body>
+
+<form action="{{ url_for('classes') }}">
+    <input type="submit" value="Main Page" />
+</form><br>
+
+
 <h2>Select Class To Reset</h2>
 {% for row in Class %}
     <form action="{{ url_for('removeClassResults') }}" method = "POST">

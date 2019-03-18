@@ -16,7 +16,12 @@
 <button onclick="showButton()">Score Student</button><br>
 
 <div id="DIV1" class="hidden">
-    <h2>Score for {{ student }} is {{ score }} / 20 or {{ scoreP }}%</h2>
+    <h2>Score for {{ student }} is {{ score }} / 20 or {{ scoreP }}%</h2><br>
+    <h2>Preparedness: {{ num1 }}</h2><br>
+    <h2>Engagement: {{ num2 }}</h2><br>
+    <h2>Perseverance: {{ num3 }}</h2><br>
+    <h2>Problem Solving: {{ num4 }}</h2><br>
+    <h2>Professionalism: {{ num5 }}</h2><br>
 
     <form action="{{ url_for('students') }}" method = "POST">
     </form>
