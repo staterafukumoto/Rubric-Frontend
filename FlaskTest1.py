@@ -2,25 +2,23 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 #TODO today
-#More than one class - Done!
-#Update SQL function to inclue the new system of sorting- Done!
-#Look into DISTINCT in SQLite3 - Done!
-#Remove number of students add function, I don't like it - Done
-#Add more titles - Done!
-#fix the /student post requests - Fixed
-#Create class in webApp - Done!
-#Clean Templates Folder - Done
+#Reset class score button - Done
+#Talk with sid - Done
+#Buttons they are a... - Done
+#Remove class function - Done
+#Check that all routes are URL-FOR - Done
 
 #TODO in the future
 #Ask sid to scetch out how he wants his frontend to look - Sid, Beta 0.2
 #Add CSS / margins - Sid, Beta 0.2
 #I hate the score list on /user - Sid, Beta 0.2
-#Remoeve Function with new SQL method - Beta 0.2
+#Remove Function with new SQL method - Beta 0.2
 #Remove function general update - Beta 0.2
-#Reset student score button - Beta 0.25
+#Score Student show each column of the Rubric - Beta 0.25
 #Consider switching to MYSQL - Beta 0.3
 #Consider switching to Django - Beta 0.3
 #Random select student function - Beta 0.4
+#Submit button for student grade says student name - Beta 0.4
 #User handling - Beta 0.5
 #Does not take names with a space - try/catch -Push 
 #Add try/Catch statement to student name enter. - Push 
@@ -262,7 +260,7 @@ def addClass():
 
 
 
-@app.route('/addClass/student', methods = ['POST'])
+@app.route('/addClass/result', methods = ['POST'])
 def addClassStudent():
     Class = request.form['className']
     Name = request.form['name']
@@ -273,6 +271,57 @@ def addClassStudent():
         cur.execute("INSERT INTO students(name, ClassName) VALUES (?, ?)", (Name, Class, ))
 
     return render_template("addClassStudent.html", Class = Class, Name = Name)
+
+
+
+@app.route('/removeClass', methods = ['POST'])
+def removeClass():
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+            cur = con.cursor()
+
+            cur.execute("SELECT DISTINCT ClassName from students")
+            classSelected = cur.fetchall()  
+
+    return render_template("removeClass.html", Class = classSelected)
+
+
+
+@app.route('/removeClass/results', methods = ['POST'])
+def removeClassResults():
+    Class = request.form['Class']
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()    
+
+        cur.execute("DELETE FROM students WHERE ClassName =?", (Class,))
+        con.commit()
+
+    return render_template('removeClassResult.html')
+
+
+@app.route('/reset', methods = ['GET'])
+def reset():
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
+
+        cur.execute("SELECT DISTINCT ClassName from students")
+        classSelected = cur.fetchall()
+
+    return render_template('reset.html', Class = classSelected)
+
+
+
+@app.route('/reset/result', methods = ['POST'])
+def resetResult():
+    Class = request.form["Class"]
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
+
+        cur.execute("UPDATE students SET Preparedness = 3, Engagement = 3, Perseverance = 3, ProblemSolving = 3, Professionalism = 3 WHERE ClassName =? ", (Class,))
+    return render_template('resetRedirect.html')
 
 
 

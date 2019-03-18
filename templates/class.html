@@ -18,5 +18,15 @@
     <input type="submit" value="Create Class">
 </form>
 
+<h2>Remove a Class</h2>
+<form action="{{ url_for('removeClass') }}" method = "POST">
+    <input type="submit" value="Remove Class">
+</form>
+
+<h2>Reset Class Score</h2>
+<form action="{{ url_for('reset') }}">
+    <input type="submit" value="Reset class score" />
+</form><br>
+
 </body>
 </html>

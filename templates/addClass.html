@@ -3,6 +3,11 @@
 <head>
     <title>Add Class</title>
 </head>
+<body>
+
+<form action="{{ url_for('classes') }}">
+    <input type="submit" value="Main Page" />
+</form>
 
 <form action="{{ url_for('addClassStudent') }}" method = "POST">
     <h2>Enter the Class Name</h2>
@@ -13,4 +18,5 @@
     <input type="submit">
 </form>
 
+</body>
 </html>
