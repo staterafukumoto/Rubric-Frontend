@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
 #TODO today
-#Score Student show each column of the Rubric - Done!
+#Don't let score be shown as more than 4, consolt with sid about more than 4 / less than 0.
+#It''s time... look into Django
 
 #TODO in the future
 #Consider switching to MYSQL - Beta 0.3
