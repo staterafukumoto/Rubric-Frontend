@@ -6,15 +6,17 @@ import sqlite3
 #Update SQL function to inclue the new system of sorting- Done!
 #Look into DISTINCT in SQLite3 - Done!
 #Remove number of students add function, I don't like it - Done
-#Add more titles
+#Add more titles - Done!
 #fix the /student post requests - Fixed
-#Create class in webApp 
-#Update Remove Function
+#Create class in webApp - Done!
+#Clean Templates Folder - Done
 
 #TODO in the future
 #Ask sid to scetch out how he wants his frontend to look - Sid, Beta 0.2
 #Add CSS / margins - Sid, Beta 0.2
 #I hate the score list on /user - Sid, Beta 0.2
+#Remoeve Function with new SQL method - Beta 0.2
+#Remove function general update - Beta 0.2
 #Reset student score button - Beta 0.25
 #Consider switching to MYSQL - Beta 0.3
 #Consider switching to Django - Beta 0.3
@@ -27,7 +29,6 @@ import sqlite3
 '''Use functions to declare vars, so you only declare the var when you actaully need it
 Example, def test1(): request.getform['testvar']    if x == y: test1()''' 
 # ^ This actually works!
-#Reminder, you can use action in your form to do a GET request.
 
 
 #Initializes SQL Dsatabase
@@ -81,7 +82,7 @@ def user():
 
 
 
-@app.route('/user/Route', methods= ['POST'])
+@app.route('/student/Route', methods= ['POST'])
 def userRoute():
 
     studentSQL = request.form['submit']
@@ -237,6 +238,8 @@ def add():
 
     return render_template("add.html", Class = classSelected)
 
+
+
 @app.route('/add/result', methods = ['POST'])
 def addStudent():
     Class = request.form['Class']
@@ -249,6 +252,27 @@ def addStudent():
         print("Student(s) added")
 
     return render_template("AddResults.html", Class = Class, Name = Name)
+
+
+
+@app.route('/addClass', methods = ['POST'])
+def addClass():
+
+    return render_template ("addClass.html")
+
+
+
+@app.route('/addClass/student', methods = ['POST'])
+def addClassStudent():
+    Class = request.form['className']
+    Name = request.form['name']
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
+
+        cur.execute("INSERT INTO students(name, ClassName) VALUES (?, ?)", (Name, Class, ))
+
+    return render_template("addClassStudent.html", Class = Class, Name = Name)
 
 
 

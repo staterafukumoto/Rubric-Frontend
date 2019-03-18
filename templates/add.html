@@ -1,24 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    
 <head>
-<title>Add Student</title>
+    <title>Add Student</title>
 </head>
 
-<body>
-<form action="{{ url_for('students') }}">
-    <input type="submit" value="Main Page" />
-</form><br>
+    <h2>Select Students Class</h2>
+    <form action="{{ url_for('addStudent') }}" method = "POST">
+    <input type="text", name="name" required><br>
+{% for row in Class %}
+    <input type="submit", name="Class" value={{ row[0] }}>
+    <p> </p><br />
+    {% endfor %}
 
-<p> </p>
-
-<p>Please enter the number of students you would like to add.</p>
-
-<form action="{{ url_for('results') }}" method="POST">
-    <input type="number" name="num" required>
-    <input type="submit">
 </form>
-</body>
-
 
 </html>
