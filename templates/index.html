@@ -24,6 +24,8 @@
 
 <br><br>
 
+<p> </p>
+
 {% for row in students %}
 <form action="{{ url_for('user') }}" method = "POST">
     <input type="submit", name="StudentDB" value={{ row[0] }}>

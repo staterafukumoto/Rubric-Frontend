@@ -2,7 +2,9 @@
 <html>
 
 <head>
-    <title>{{ student }} Grade</title>
+{% for x in data %}
+    <title>{{ x[0] }} Grade</title>
+    {% endfor %}
 </head>
 
 <body>
@@ -47,7 +49,9 @@
     <input type="radio" name="button5" value="+1" style="float: right;" ><br>
 
     <center><h3>"Submit"</h3></center>
-    <center><input type="submit" name="submit" value="{{ student }}"></center>
+{% for x in data %}
+    <center><input type="submit" name="submit" value={{ x[0] }}></center>
+    {% endfor %}
 </form>
 </body>
 </html>

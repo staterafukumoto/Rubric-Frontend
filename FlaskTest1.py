@@ -1,18 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+from random import randint
 
 #TODO today
-#Don't let score be shown as more than 4, consolt with sid about more than 4 / less than 0.
-#It''s time... look into Django
+#Random select student function - Done
+#Sort by class in SQL function, /random/route - Done
 
 #TODO in the future
 #Consider switching to MYSQL - Beta 0.3
 #Consider switching to Django - Beta 0.3
-#Random select student function - Beta 0.4
 #Submit button for student grade says student name - Beta 0.4
 #User handling - Beta 0.5
-#Alert on refres, may be fixed after Django. - TBA
+#Alert on refresh, may be fixed after Django. - TBA
 #Does not take names with a space / try/catch - Django
+
 
 '''Use functions to declare vars, so you only declare the var when you actaully need it
 Example, def test1(): request.getform['testvar']    if x == y: test1()''' 
@@ -200,7 +201,7 @@ def remove():
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
 
-        cur.execute("SELECT name FROM students")
+        cur.execute("SELECT name, ClassName FROM students")
         studentsDB = cur.fetchall()
 
     return render_template('remove.html', student = studentsDB)
@@ -295,6 +296,7 @@ def removeClassResults():
     return render_template('removeClassResult.html')
 
 
+
 @app.route('/reset', methods = ['GET'])
 def reset():
 
@@ -317,6 +319,37 @@ def resetResult():
 
         cur.execute("UPDATE students SET Preparedness = 3, Engagement = 3, Perseverance = 3, ProblemSolving = 3, Professionalism = 3 WHERE ClassName =? ", (Class,))
     return render_template('resetRedirect.html', Class= Class)
+
+
+
+@app.route('/random', methods = ['POST'])
+def random():
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
+
+        cur.execute("SELECT DISTINCT ClassName from students")
+        classSelected = cur.fetchall()
+    
+    return render_template("random.html", Class = classSelected)
+
+
+
+@app.route('/random/student', methods = ['POST'])
+def randomRoute():
+    
+    Class = request.form["Class"]
+
+
+    with sqlite3.connect("twoDadDatabase.db") as con:
+        cur = con.cursor()
+
+
+        cur.execute("SELECT * FROM students WHERE ClassName =? ORDER BY RANDOM() LIMIT 1", (Class,))
+        #Select all values from the students table where the ClassName = out CLass Variable, Order randomly and only take 1.
+        dataTest = cur.fetchall()
+
+    return render_template("user.html", data=dataTest)
 
 
 
