@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" type="text/css" href="static/css/style.css">
+<title>Select Student</title>
+</head>
+
+<body>
+<h2>{{ studentClass }}</h2>
+<h2>Select Your Student.</h2>
+
+<form action="{{ url_for('classes') }}">
+    <input type="submit" value="Select class" />
+</form><br>
+
+<form action="{{ url_for('add') }}">
+    <input type="submit" value="Add Another Student" />
+</form><br>
+
+<form action="{{ url_for('remove') }}">
+    <input type="submit" value="Remove students" />
+</form><br>
+
+<br><br>
+
+<p> </p>
+
+{% for row in students %}
+<form action="{{ url_for('user') }}" method = "POST">
+    <input type="submit", name="StudentDB" value={{ row[0] }}>
+    <p> </p><br />
+    {% endfor %}
+
+</form>
+</body>
+
+</html>

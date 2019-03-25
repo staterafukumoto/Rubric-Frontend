@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <title>Class Select</title>
+</head>
+
+<body>
+<html>
+<h2>Select Your Class.</h2>
+{% for row in Class %}
+    <form action="{{ url_for('students') }}" method = "POST">
+    <input type="submit", name="Class" value={{ row[0] }}>
+    <p> </p><br>
+    {% endfor %}
+</form>
+
+<h2>Pick a random Student</h2>
+<form action="{{ url_for('random') }}" method = "POST">
+    <input type="submit" value="Pick a random student">
+</form>
+
+<h2>Create a Class</h2>
+<form action="{{ url_for('addClass') }}" method = "POST">
+    <input type="submit" value="Create Class">
+</form>
+
+<h2>Remove a Class</h2>
+<form action="{{ url_for('removeClass') }}" method = "POST">
+    <input type="submit" value="Remove Class">
+</form>
+
+<h2>Reset Class Score</h2>
+<form action="{{ url_for('reset') }}">
+    <input type="submit" value="Reset class score" />
+</form><br>
+
+</body>
+</html>

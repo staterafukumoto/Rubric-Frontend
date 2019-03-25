@@ -3,16 +3,17 @@ import sqlite3
 from random import randint
 
 #TODO today
-#Random select student function - Done
-#Sort by class in SQL function, /random/route - Done
+#Was Selected should not matter in normal select - Fixed
+#Update Random Selection - Done!
+#Ask Mr. Sid if he wants normal select to == WasSelected, and if to make a basic manual reset. - Sid
 
 #TODO in the future
-#Consider switching to MYSQL - Beta 0.3
-#Consider switching to Django - Beta 0.3
 #Submit button for student grade says student name - Beta 0.4
-#User handling - Beta 0.5
+#User handling - TBA
+#Consider switching to Django - TBA
+#Consider switching to MYSQL - TBA
 #Alert on refresh, may be fixed after Django. - TBA
-#Does not take names with a space / try/catch - Django
+#Does not take names with a space / try/catch - TBA
 
 
 '''Use functions to declare vars, so you only declare the var when you actaully need it
@@ -82,6 +83,8 @@ def userRoute():
         def addValue():
 
             #Preparedness
+            cur.execute("UPDATE students SET WasSelected = 1 WHERE name =?", (studentSQL,))
+
             if request.form.get("button1", False):
                 button1 = request.form["button1"]
                 if button1 == "-1":
@@ -152,11 +155,11 @@ def userRoute():
         score = cur.fetchall()
         # More than 4
         for x in score:
-            num1 = x[0]
-            num2 = x[1]
-            num3 = x[2]
-            num4 = x[3]
-            num5 = x[4]
+            num1 = int(x[0])
+            num2 = int(x[1])
+            num3 = int(x[2])
+            num4 = int(x[3])
+            num5 = int(x[4])
 
             #Num1
             if num1 >= 4:
@@ -344,8 +347,18 @@ def randomRoute():
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
 
+        cur.execute("SELECT WasSelected FROM students WHERE ClassName =?", (Class,))
+        selected = cur.fetchall()
 
-        cur.execute("SELECT * FROM students WHERE ClassName =? ORDER BY RANDOM() LIMIT 1", (Class,))
+        allSelected = all(x==selected[0] for x in selected)
+        print("List: " + str(selected))
+        print("All students selected: " + str(allSelected))
+
+        if allSelected == True:
+            cur.execute("UPDATE students SET WasSelected = 0 WHERE ClassName =?", (Class,))
+            print("All students available.")
+
+        cur.execute("SELECT * FROM students WHERE ClassName =? AND WasSelected = 0 ORDER BY RANDOM() LIMIT 1", (Class,))
         #Select all values from the students table where the ClassName = out CLass Variable, Order randomly and only take 1.
         dataTest = cur.fetchall()
 
