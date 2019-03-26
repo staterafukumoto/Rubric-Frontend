@@ -3,9 +3,7 @@ import sqlite3
 from random import randint
 
 #TODO today
-#Was Selected should not matter in normal select - Fixed
-#Update Random Selection - Done!
-#Ask Mr. Sid if he wants normal select to == WasSelected, and if to make a basic manual reset. - Sid
+#Cannot have a class with a space, or a student with a space. - Fixed
 
 #TODO in the future
 #Submit button for student grade says student name - Beta 0.4
@@ -261,8 +259,9 @@ def addClass():
 
 @app.route('/addClass/result', methods = ['POST'])
 def addClassStudent():
-    Class = request.form['className']
-    Name = request.form['name']
+    Class = request.form['className'].replace(" ", "_")
+    Name = request.form['name'].replace(" ", "_")
+
 
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
