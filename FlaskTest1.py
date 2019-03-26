@@ -320,7 +320,7 @@ def resetResult():
     with sqlite3.connect("twoDadDatabase.db") as con:
         cur = con.cursor()
 
-        cur.execute("UPDATE students SET Preparedness = 3, Engagement = 3, Perseverance = 3, ProblemSolving = 3, Professionalism = 3 WHERE ClassName =? ", (Class,))
+        cur.execute("UPDATE students SET Preparedness = 3, Engagement = 3, Perseverance = 3, ProblemSolving = 3, WasSelected = 0, Professionalism = 3 WHERE ClassName =? ", (Class,))
     return render_template('resetRedirect.html', Class= Class)
 
 
